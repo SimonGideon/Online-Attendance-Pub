@@ -30,7 +30,7 @@
 
 # 📖 ONLINE ATTENDANCE <a name="about-project"></a>
 
-> The Online Attendance System with QR Code Integration is designed to streamline the process of marking attendance for learners in educational settings. This system leverages QR codes to provide a quick and efficient method for both lecturers and learners to manage attendance records.
+> The Online Attendance System with QR Code Integration is designed to streamline the process of marking attendance for learners in educational settings. This system leverages QR codes to provide a quick and efficient method for lecturers and learners to manage attendance records.
 
 ## 🛠 Built With <a name="built-with"></a>
 
