@@ -1,0 +1,88 @@
+<% content_for(:title, "Attendance Record ##{@attendance.id}") %>
+
+<div class="main-content-container">
+  <div class="card">
+    <div class="card-header">
+      <h3>Attendance Details</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <tr>
+          <th>ID</th>
+          <td><%= @attendance.id %></td>
+        </tr>
+        <tr>
+          <th>Student</th>
+          <td><%= @student&.name || 'N/A' %> (<%= @student&.registraion_number %>)</td>
+        </tr>
+        <tr>
+          <th>Course</th>
+          <td><%= @course&.course_name || 'N/A' %> (<%= @course&.course_code %>)</td>
+        </tr>
+        <tr>
+          <th>Lecturer</th>
+          <td><%= @lecturer&.name || 'N/A' %> (<%= @lecturer&.service_number %>)</td>
+        </tr>
+        <tr>
+          <th>Attendance Date</th>
+          <td><%= @attendance.attendance_date&.strftime("%B %d, %Y") || 'N/A' %></td>
+        </tr>
+        <tr>
+          <th>Status</th>
+          <td>
+            <% if @attendance.present %>
+              <span class="badge badge-success">✓ Present</span>
+            <% else %>
+              <span class="badge badge-danger">✗ Absent</span>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th>Recorded At</th>
+          <td><%= @attendance.created_at.strftime("%B %d, %Y %H:%M %p") %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <% if @lecturer_unit %>
+    <div class="card mt-4">
+      <div class="card-header">
+        <h3>All Students in This Unit</h3>
+      </div>
+      <div class="card-body">
+        <% students_in_unit = StudentsCourse.where(lecturer_unit_id: @lecturer_unit.id).includes(:student) %>
+        <% if students_in_unit.any? %>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>Registration Number</th>
+                <th>Email</th>
+                <th>Enrolled At</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% students_in_unit.each do |sc| %>
+                <tr>
+                  <td><%= link_to sc.student.name, trestle.students_admin_path(sc.student) %></td>
+                  <td><%= sc.student.registraion_number %></td>
+                  <td><%= sc.student.email %></td>
+                  <td><%= sc.created_at.strftime("%b %d, %Y") %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <p class="text-muted mt-2">Total students in this unit: <%= students_in_unit.count %></p>
+        <% else %>
+          <p class="text-muted">No students enrolled in this unit yet.</p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="mt-3">
+    <%= link_to "Edit", trestle.edit_attendances_admin_path(@attendance), class: "btn btn-primary" %>
+    <%= link_to "Back to List", trestle.attendances_admin_path, class: "btn btn-secondary" %>
+  </div>
+</div>

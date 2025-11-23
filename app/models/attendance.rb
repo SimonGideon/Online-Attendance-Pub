@@ -1,5 +1,6 @@
 class Attendance < ApplicationRecord
   belongs_to :students_course
+  belongs_to :course, optional: true
 
   private
 

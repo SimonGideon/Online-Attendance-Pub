@@ -1,0 +1,70 @@
+<% content_for(:title, "Lecturer: #{@lecturer.name}") %>
+
+<div class="main-content-container">
+  <div class="card">
+    <div class="card-header">
+      <h3>Lecturer Details</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <tr>
+          <th>Name</th>
+          <td><%= @lecturer.name %></td>
+        </tr>
+        <tr>
+          <th>Service Number</th>
+          <td><%= @lecturer.service_number %></td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td><%= @lecturer.email %></td>
+        </tr>
+        <tr>
+          <th>Phone</th>
+          <td><%= @lecturer.phone %></td>
+        </tr>
+        <tr>
+          <th>Work Email</th>
+          <td><%= @lecturer.work_email %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3>Units/Courses Taught (<%= @lecturer_units.count %>)</h3>
+    </div>
+    <div class="card-body">
+      <% if @lecturer_units.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Course Name</th>
+              <th>Course Code</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @lecturer_units.each do |lecturer_unit| %>
+              <tr>
+                <td><%= lecturer_unit.id %></td>
+                <td><%= lecturer_unit.course.course_name %></td>
+                <td><%= lecturer_unit.course.course_code %></td>
+                <td><%= lecturer_unit.created_at.strftime("%b %d, %Y") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-muted">No units assigned yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <%= link_to "Edit", trestle.edit_lecturers_admin_path(@lecturer), class: "btn btn-primary" %>
+    <%= link_to "Back to List", trestle.lecturers_admin_path, class: "btn btn-secondary" %>
+  </div>
+</div>

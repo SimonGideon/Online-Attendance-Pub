@@ -10,6 +10,9 @@ Trestle.resource(:students) do
     column :email
     column :phone
     column :registraion_number
+    column :courses, header: "Courses Enrolled" do |student|
+      student.students_courses.count
+    end
     column :created_at, align: :center
     actions
   end
@@ -21,6 +24,20 @@ Trestle.resource(:students) do
     text_field :email
     text_field :phone
     text_field :registraion_number
+  end
+
+  # Show page with detailed information
+  controller do
+    def show
+      @student = admin.find_instance(params)
+      @students_courses = @student.students_courses.includes(lecturer_unit: :course)
+      @attendances = Attendance.joins(:students_course).where(students_courses: { student_id: @student.id }).includes(:students_course, :course)
+    end
+  end
+
+  # Custom show view to display all units the student has attended
+  routes do
+    get :show, on: :member
   end
 
   # By default, all parameters passed to the update and create actions will be

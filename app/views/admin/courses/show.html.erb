@@ -1,0 +1,139 @@
+<% content_for(:title, "Course: #{@course.course_name}") %>
+
+<div class="main-content-container">
+  <div class="card">
+    <div class="card-header">
+      <h3>Course Details</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <tr>
+          <th>Course Name</th>
+          <td><%= @course.course_name %></td>
+        </tr>
+        <tr>
+          <th>Course Code</th>
+          <td><%= @course.course_code %></td>
+        </tr>
+        <tr>
+          <th>Primary Lecturer</th>
+          <td><%= @course.lecturer&.name || 'N/A' %></td>
+        </tr>
+        <tr>
+          <th>Created At</th>
+          <td><%= @course.created_at.strftime("%B %d, %Y") %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3>Lecturer Units (<%= @lecturer_units.count %>)</h3>
+    </div>
+    <div class="card-body">
+      <% if @lecturer_units.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Lecturer</th>
+              <th>Service Number</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @lecturer_units.each do |lecturer_unit| %>
+              <tr>
+                <td><%= lecturer_unit.id %></td>
+                <td><%= link_to lecturer_unit.lecturer.name, trestle.lecturers_admin_path(lecturer_unit.lecturer) %></td>
+                <td><%= lecturer_unit.lecturer.service_number %></td>
+                <td><%= lecturer_unit.created_at.strftime("%b %d, %Y") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-muted">No lecturer units assigned yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3>Enrolled Students (<%= @students.count %>)</h3>
+    </div>
+    <div class="card-body">
+      <% if @students.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Registration Number</th>
+              <th>Email</th>
+              <th>Enrolled At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @students.each do |students_course| %>
+              <tr>
+                <td><%= link_to students_course.student.name, trestle.students_admin_path(students_course.student) %></td>
+                <td><%= students_course.student.registraion_number %></td>
+                <td><%= students_course.student.email %></td>
+                <td><%= students_course.created_at.strftime("%b %d, %Y") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-muted">No students enrolled yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3>Attendance Records (<%= @attendances.count %>)</h3>
+    </div>
+    <div class="card-body">
+      <% if @attendances.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Student</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @attendances.limit(50).each do |attendance| %>
+              <tr>
+                <td><%= link_to attendance.id, trestle.attendances_admin_path(attendance) %></td>
+                <td><%= attendance.students_course&.student&.name || 'N/A' %></td>
+                <td><%= attendance.attendance_date&.strftime("%b %d, %Y") || 'N/A' %></td>
+                <td>
+                  <% if attendance.present %>
+                    <span class="badge badge-success">✓ Present</span>
+                  <% else %>
+                    <span class="badge badge-danger">✗ Absent</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <% if @attendances.count > 50 %>
+          <p class="text-muted mt-2">Showing 50 of <%= @attendances.count %> total attendance records</p>
+        <% end %>
+      <% else %>
+        <p class="text-muted">No attendance records yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <%= link_to "Edit", trestle.edit_courses_admin_path(@course), class: "btn btn-primary" %>
+    <%= link_to "Back to List", trestle.courses_admin_path, class: "btn btn-secondary" %>
+  </div>
+</div>

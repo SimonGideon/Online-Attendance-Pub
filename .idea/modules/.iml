@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="RUBY_MODULE" version="4">
+  <component name="ModuleRunConfigurationManager">
+    <shared />
+  </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$/../../.ruby-lsp">
       <sourceFolder url="file://$MODULE_DIR$/../../.ruby-lsp/features" isTestSource="true" />
@@ -111,7 +114,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rexml (v3.2.6, RVM: ruby-3.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rqrcode (v2.2.0, RVM: ruby-3.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rqrcode_core (v1.2.0, RVM: ruby-3.3.1) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="ruby-lsp (v0.26.1, RVM: ruby-3.3.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ruby-lsp (v0.26.2, RVM: ruby-3.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby-lsp-rails (v0.4.8, RVM: ruby-3.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby-vips (v2.2.0, RVM: ruby-3.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubyzip (v2.3.2, RVM: ruby-3.3.1) [gem]" level="application" />

@@ -144,7 +144,20 @@ bin/rails db:seed
 
 To run tests, run the following command:
 
+### Deployment
 
+> Deploy this application to an Ubuntu server
+
+#### Quick Start
+- See [DEPLOYMENT_QUICKSTART.md](./DEPLOYMENT_QUICKSTART.md) for a quick deployment guide
+
+#### Full Documentation
+- See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment instructions
+- See [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) for deployment checklist
+
+#### Deployment Scripts
+- All deployment scripts are available in the `scripts/` directory
+- See [scripts/README.md](./scripts/README.md) for script documentation
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

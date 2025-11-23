@@ -72,14 +72,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_24_164451) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "events", force: :cascade do |t|
-    t.string "title"
-    t.date "start_date"
-    t.date "end_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "lecturer_units", force: :cascade do |t|
     t.bigint "lecturer_id", null: false
     t.bigint "course_id", null: false
@@ -94,6 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_24_164451) do
   create_table "lecturers", force: :cascade do |t|
     t.string "name"
     t.string "service_number"
+    t.string "gender"
     t.string "phone"
     t.string "work_email"
     t.datetime "created_at", null: false

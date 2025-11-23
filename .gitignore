@@ -36,3 +36,14 @@ config/master.key
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 **/node_modules
+node_modules/
+
+# Deployment documentation and scripts
+DEPLOYMENT*.md
+DEPLOYMENT_*.md
+scripts/*.sh
+scripts/README.md
+config/puma.service.example
+config/nginx.conf.example
+config/puma.production.rb.example
+config/env.example

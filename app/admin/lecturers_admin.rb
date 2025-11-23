@@ -10,6 +10,9 @@ Trestle.resource(:lecturers) do
     column :service_number
     column :phone
     column :email
+    column :units, header: "Units Count" do |lecturer|
+      lecturer.lecturer_units.count
+    end
     column :created_at, align: :center
     actions
   end
@@ -26,6 +29,19 @@ Trestle.resource(:lecturers) do
       col { text_field :password }
       col { text_field :password_confirmation }
     end
+  end
+
+  # Show page with detailed information
+  controller do
+    def show
+      @lecturer = admin.find_instance(params)
+      @lecturer_units = @lecturer.lecturer_units.includes(:course)
+    end
+  end
+
+  # Custom show view to display all units for the lecturer
+  routes do
+    get :show, on: :member
   end
 
   # By default, all parameters passed to the update and create actions will be

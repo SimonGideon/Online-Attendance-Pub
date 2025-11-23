@@ -1,0 +1,106 @@
+<% content_for(:title, "Student: #{@student.name}") %>
+
+<div class="main-content-container">
+  <div class="card">
+    <div class="card-header">
+      <h3>Student Details</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <tr>
+          <th>Name</th>
+          <td><%= @student.name %></td>
+        </tr>
+        <tr>
+          <th>Registration Number</th>
+          <td><%= @student.registraion_number %></td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td><%= @student.email %></td>
+        </tr>
+        <tr>
+          <th>Phone</th>
+          <td><%= @student.phone %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3>Enrolled Courses (<%= @students_courses.count %>)</h3>
+    </div>
+    <div class="card-body">
+      <% if @students_courses.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Course Name</th>
+              <th>Course Code</th>
+              <th>Enrolled At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @students_courses.each do |students_course| %>
+              <tr>
+                <td><%= students_course.id %></td>
+                <td><%= students_course.lecturer_unit.course.course_name %></td>
+                <td><%= students_course.lecturer_unit.course.course_code %></td>
+                <td><%= students_course.created_at.strftime("%b %d, %Y") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-muted">No courses enrolled yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3>Attendance Records (<%= @attendances.count %>)</h3>
+    </div>
+    <div class="card-body">
+      <% if @attendances.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Course</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Recorded At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @attendances.each do |attendance| %>
+              <tr>
+                <td><%= attendance.id %></td>
+                <td><%= attendance.course&.course_name || 'N/A' %></td>
+                <td><%= attendance.attendance_date&.strftime("%b %d, %Y") || 'N/A' %></td>
+                <td>
+                  <% if attendance.present %>
+                    <span class="badge badge-success">✓ Present</span>
+                  <% else %>
+                    <span class="badge badge-danger">✗ Absent</span>
+                  <% end %>
+                </td>
+                <td><%= attendance.created_at.strftime("%b %d, %Y %H:%M") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-muted">No attendance records yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <%= link_to "Edit", trestle.edit_students_admin_path(@student), class: "btn btn-primary" %>
+    <%= link_to "Back to List", trestle.students_admin_path, class: "btn btn-secondary" %>
+  </div>
+</div>
