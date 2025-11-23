@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get "/attendances", to: "lecturers#lecturer_attendance"
     post "generate_token", on: :member
     post "generate_qr_code", on: :member
+    get "qr_code", on: :member
     resources :lecturer_units
   end
 

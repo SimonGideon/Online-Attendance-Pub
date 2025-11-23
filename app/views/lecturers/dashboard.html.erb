@@ -15,8 +15,8 @@
               </div>
             </div>
             <div class="col qr-code-container">
-              <%= image_tag current_lecturer.qr_code, class: "img-fluid" if current_lecturer.qr_code.attached? %> <br>
-              <%= button_to "Generate QR Code", generate_qr_code_lecturer_path(@lecturer), method: :post %>
+              <%= image_tag qr_code_lecturer_path(current_lecturer), class: "img-fluid" %> <br>
+              <%= button_to "Refresh QR Code", generate_qr_code_lecturer_path(@lecturer), method: :post %>
             </div>
           </div>
           <div class="row epic-container">

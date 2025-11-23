@@ -1,7 +1,7 @@
 class LecturersController < ApplicationController
   # load_and_authorize_resource
-  before_action :set_lecturer, only: %i[show edit update destroy]
-  before_action :authenticate_lecturer!, only: %i[show edit update destroy generate_qr_code]
+  before_action :set_lecturer, only: %i[show edit update destroy qr_code]
+  before_action :authenticate_lecturer!, only: %i[show edit update destroy generate_qr_code qr_code]
 
   # GET /lecturers or /lecturers.json
   def index
@@ -32,13 +32,6 @@ class LecturersController < ApplicationController
     end
 
     authorize! :read, @lecturer
-
-    if @lecturer.qr_code.attached?
-      puts "QR code attached"
-    else
-      puts "QR code not attached"
-    end
-    puts "This is the current: #{@lecturer}"
 
     @allocated_units_count = LecturerUnit.where(lecturer_id: current_lecturer.id).count
     @total_students_count = StudentsCourse.where(lecturer_unit_id: current_lecturer.lecturer_units.pluck(:id)).count
@@ -102,7 +95,7 @@ class LecturersController < ApplicationController
     return token
   end
 
-  # generate QR code with token
+  # generate QR code with token (legacy - now just shows success message)
   def generate_qr_code
     result = current_lecturer.generate_qr_code
 
@@ -110,6 +103,20 @@ class LecturersController < ApplicationController
       flash[:error] = result[:error]
     else
       flash[:notice] = result[:success]
+    end
+    
+    redirect_back(fallback_location: dashboard_lecturer_path(current_lecturer))
+  end
+
+  # Serve QR code as PNG image (generated on-the-fly, not saved to S3)
+  def qr_code
+    lecturer = @lecturer || current_lecturer
+    qr_code_png = lecturer.qr_code_png
+    
+    if qr_code_png
+      send_data qr_code_png.to_s, type: 'image/png', disposition: 'inline'
+    else
+      head :not_found
     end
   end
 
